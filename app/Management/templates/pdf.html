@@ -1,0 +1,155 @@
+{% load static %}
+
+<style>
+    @page {
+        size: letter;
+        margin: 1cm;
+    }
+</style>
+    
+<body>
+    <!-- The following code checks the gender of the candidate and displays a colored tab accordingly -->
+    {% if candidate.gender == 'M' %}
+    <div class="tab" style="background-color: rgba(0, 110, 255, 0.83); color: white; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 16px;text-align: center; align-items: center;
+    justify-content: center;">
+    <i></i><p style="padding-bottom: -1px;">{{ candidate.firstname }} {{ candidate.lastname }}</p>
+    </div>
+    {% else %}
+    <div class="tab" style="background-color: #FF3C00; color: white; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 16px;text-align: center; align-items: center;
+    justify-content: center;">
+    <p style="padding-bottom: -1px"> {{ candidate.firstname }} {{ candidate.lastname }}</p>
+    </div>
+    {% endif %}
+
+    <!-- This div displays the generated at time and the user who generated the page -->
+    <div style="background-color: #F9F8F8; color: white; text-align: center; text-align: center; align-items: center;
+    justify-content: center;">
+        <div style="color: black; padding-bottom: -3px; padding-top: 4px; font-size: 13px;">
+            <strong>Generated at:</strong> {% now "m/d/Y (H:i)" %} | <strong>By:</strong> {{ user.get_username }}
+        </div>   
+    </div>
+    <!-- This div creates a horizontal line -->
+    <div style="clear: both; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+    <!-- This line displays the candidate ID -->
+    <p style="font-size: 13px; margin-bottom: 0px;">CANDIDATE: {{ candidate.id }}</p>
+    <!-- This div creates another horizontal line -->
+    <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+    <!-- This div displays the candidate's image and age -->
+    <div style="vertical-align:right; margin-top: 10px;">
+        <img src="{{ candidate.image.url }}" style="width: 135px; height:100px;">
+        <div style="font-size: 12px; text-align: right; margin-top: 16px; padding-right: 8px;">{{ candidate.birth|timesince }} old</div>
+    </div>
+    <!-- PERSONAL -->
+    <h6 style="font-size: 14px; color: #007bff; margin-bottom: 1.5rem; margin-top: 1.5rem;">PERSONAL</h6>
+    <div style="font-size: 13px;">
+        <!-- Statement to job code -->
+        {% if candidate.job == 'Frontend' %}
+        <p><strong>Occupation:</strong> Frontend</p>
+        {% elif candidate.job == 'Backend' %}
+        <p><strong>Occupation:</strong> Backend</p>
+        {% elif candidate.job == 'Full-Stack' %}
+        <p><strong>Occupation:</strong> Fullstack</p>
+        {% endif %}
+
+        <p><strong>Gender:</strong> {{candidate.gender}}</p>
+        <p><strong>Phone:</strong> {{candidate.phone}}</p>
+        <p><strong>Email:</strong> {{candidate.email}}</p>
+        <p><strong>Birth Date:</strong> {{candidate.birth}}</p>
+        <p><strong>Personality:</strong> {{candidate.personality}}</p>
+
+        <!-- Smoker statement -->
+        {% if candidate.smoker == True %}
+        <p><strong>Smoker:</strong> Yes</p>
+        {% else %}
+        <p><strong>Smoker:</strong> No</p>
+        {% endif %}
+
+        <!-- Experience statement -->
+        {% if candidate.experience == True %}
+        <p><strong>Experience:</strong><span style="color: #007bff;"> Yes</span></p>
+        {% else %}
+        <p><strong>Experience:</strong><span style="color: #dc3545;"> No</span></p>
+        {% endif %}
+
+        <p><strong>Salary expectation:</strong> {{candidate.salary}}</p>
+        <p><strong>Presentation:</strong> {{candidate.message}}</p>
+    </div>
+    <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+    <!-- SKILLS -->
+    <h6 style="font-size: 14px; color: #007bff; margin-bottom: 1.5rem; margin-top: 1.5rem;">SKILLS</h6>
+    <div style="font-size: 13px;">
+        <p><strong>Frameworks:</strong> {{candidate.frameworks}}</p>
+        <p><strong>Languages:</strong> {{candidate.languages}}</p>
+        <p><strong>Databases:</strong> {{candidate.databases}}</p>
+        <p><strong>Libraries:</strong> {{candidate.libraries}}</p>
+        <p><strong>Mobile:</strong> {{candidate.mobile}}</p>
+        <p><strong>Others:</strong> {{candidate.others}}</p>
+    </div>
+         
+    <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+
+    <!-- EDUCATIONAL -->
+    <h6 style="font-size: 14px; color: #007bff; margin-bottom: 1.5rem; margin-top: 1.5rem;">EDUCATIONAL</h6>
+        <div style="font-size: 13px;">
+            <p><strong>Institution:</strong> {{candidate.frameworks}}</p>
+            <p><strong>Course:</strong> {{candidate.course}}</p>
+            <p><strong>Started:</strong> {{candidate.started_course}}</p>
+            <p>{% if candidate.finished_course == None %} {% else %}
+                <strong>Finished:</strong> {{candidate.finished_course}}
+            </p>
+            {% endif %}
+            <p><strong>Course status:</strong> 
+                {% if candidate.status_course == 'I took a break' %}
+                    <span style="color: #dc3545;">{{candidate.status_course}}</span>
+                {% elif candidate.status_course == "I'm studying" %}
+                    <span style="color: green;">{{candidate.status_course}}</span>
+                {% else %}
+                     <span>{{candidate.status_course}}</span></p>
+                {% endif %}
+            </p>
+            <p><strong>About:</strong> {{candidate.about_course}}</p>
+            <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+            {% if candidate.company == "" %}
+            <p style="color: #dc3545;">This candidate has no experience</p>
+            {% else %}
+        </div>
+
+    <!-- EXPERIENCE -->
+    <h6 style="font-size: 14px; color: #007bff; margin-bottom: 1.5rem; margin-top: 1.5rem;">EXPERIENCE</h6>
+    <div style="font-size: 13px;">
+        <p><strong>Company:</strong> {{candidate.company}}</p>
+        <p><strong>Position:</strong> {{candidate.position}}</p>
+        <p><strong>Started:</strong> {{candidate.started_job}}</p>
+        <p><strong>Finished:</strong> {{candidate.finished_job}}</p>
+        <p><strong>About:</strong> {{candidate.about_course}}</p>
+        {% endif %}
+    </div>
+    <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+
+    <!-- ==============NOTE====================== -->
+    <h6 style="font-size: 14px; color: #007bff; margin-bottom: 1.5rem; margin-top: 1.5rem;">NOTE</h6>
+    <div style="font-size: 13px;">
+        <!-- Employed -->
+        {% if candidate.employed == True %}
+        <p><strong>Employed:</strong> <span style="color: #007bff;">Yes</span></p>    
+        {% else %}
+        <p><strong>Employed:</strong> <span style="color: #dc3545;">No</span></p>  
+        {% endif %}
+
+        <!-- Remotely -->
+        {% if candidate.remote == True %}
+        <p><strong>Accept to work remotely:</strong> Yes</p>    
+        {% else %}
+        <p><strong>Accept to work remotely:</strong> <span style="color: #dc3545;">No</span></p>  
+        {% endif %}
+
+        <!-- Travel -->
+        {% if candidate.travel == True %}
+        <p><strong>Available for trips:</strong> Yes</p>    
+        {% else %}
+        <p><strong>Available for trips:</strong> <span style="color: #dc3545;">No</span></p>  
+        {% endif %}
+    </div>
+    <div style="clear: both; padding-top: -15px; border-bottom: solid #9B9EA0 1px;">&nbsp;</div>
+</div>
+</body>

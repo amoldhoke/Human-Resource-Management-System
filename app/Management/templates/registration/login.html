@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+<!-- Block title -->
+{% block title %} Login {% endblock title %}
+
+<!-- Navbar -->
+{% block nav-content %}
+<a class="navbar-brand flex-grow-1 text-center text-light to_center txt-sm3">
+    <i class="fas fa-key f-size txt-sm3"></i>&nbsp;&nbsp; LOGIN
+</a>
+{% endblock nav-content %}
+
+<!-- Page content -->
+{% block content %}
+<div class="container card p-3 border-dark mt-5" id="card-login">
+    <!-- Error message from backend (from forms.py) -->
+    {% if form.errors %}
+        <div class='alert alert-danger alert-dismissible fade show text-center {{ message.tags }} txt-sm' role='alert'><strong>Enter your data correctly</strong>
+            <button type='button' class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <!-- Title -->
+    <a class="btn btn-dark mb-4" style="cursor:default;">
+        <i class="fas fa-lock txt-sm2"></i>&nbsp;&nbsp; <span class="txt-sm2">RESTRICTED ACCESS</span> 
+    </a>
+    <!-- Form -->
+    <form method="POST" autocomplete="off" novalidate>
+        {% csrf_token %}
+        {{ form.username|as_crispy_field }}
+        {{ form.password|as_crispy_field }}
+        <br class="hide"><hr>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-sm txt-sm">LOG IN</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary btn-sm txt-sm">CANCEL</a>
+        </div>
+    </form>
+</div> <!-- END // container -->
+
+{% endblock content %}

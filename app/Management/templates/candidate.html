@@ -1,0 +1,169 @@
+{% extends "register.html" %}
+
+<!-- Block title -->
+{% block title %} Candidate {% endblock title %}
+
+<!--================ Navbar =========================-->
+<!-- BG Color -->
+{% block navbar %}
+    {% if candidate.gender == "F" %}
+        bg-danger
+    {% else %}
+        bg-primary
+    {% endif %}
+{% endblock navbar %}
+
+<!-- Navbar content -->
+{% block nav-content %}
+<a class="navbar-brand flex-grow-1 text-center text-light to_center">
+    <i class="fas {% if candidate.gender == 'F' %} fa-female {% else %} fa-male {% endif %} f-size"></i>&nbsp;&nbsp; {{ candidate.firstname }} {{ candidate.lastname }}
+</a>
+{% endblock nav-content %}
+
+<!-- Block Footer style="color: #89cff0;" -->
+{% block footer %}
+    {% if candidate.gender == "F" %}
+        style="color: #ff7f7f7;"
+    {% else %}
+        style="color: #89cff0;"
+    {% endif %}
+{% endblock footer %}
+
+<!-- Page content -->
+{% block content %}
+<div class="container {% block mt %} mt-5 {% endblock mt %}" {% block font %}{% endblock font %}> 
+    <!-- Candidate name, image and download cv -->
+    <div class="d-flex justify-content-between">
+        {% block dt-user %}{% endblock dt-user %}
+        <h6 class="mb-3">CANDIDATE: {{ candidate.id }}</h6>
+        {% block btn-download %}
+            <a class="btn {% if candidate.gender == 'F' %} btn-danger {% else %} btn-primary {% endif %} btn-sm border-light" 
+                href="{{candidate.files.url}}" 
+                style="width: 150px;">Download CV
+            </a>
+        {% endblock btn-download %}
+    </div>
+    <hr>
+    <div class="float-end">
+        <img src="{{ candidate.image.url }}" class="img-fluid img-thumbnail" width="150px" height="150px">
+        <div class="text-center mt-2" style="font-size: 14px;">{{ candidate.birth|timesince }} old</div>
+    </div>
+    <!-- PERSONAL -->
+    <h6 class="text-primary mb-4 mt-4">PERSONAL</h6>
+    <!-- Statement to job code -->
+    {% if candidate.job == 'Frontend' %}
+        <p><strong>Occupation:</strong> Frontend</p>
+    {% elif candidate.job == 'Backend' %}
+        <p><strong>Occupation:</strong> Backend</p>
+    {% elif candidate.job == 'Full-Stack' %}
+        <p><strong>Occupation:</strong> Fullstack</p>
+    {% endif %}
+
+    <p><strong>Gender:</strong> {{candidate.gender}}</p>
+    <p><strong>Phone:</strong> {{candidate.phone}}</p>
+    <p><strong>Email:</strong> {{candidate.email}}</p>
+    <p><strong>Birth Date:</strong> {{candidate.birth}}</p>
+    <p><strong>Personality:</strong> {{candidate.personality}}</p>
+
+    <!-- Smoker statement -->
+    {% if candidate.smoker == True %}
+        <p><strong>Smoker:</strong> Yes</p>
+    {% else %}
+    <p><strong>Smoker:</strong> No</p>
+    {% endif %}
+
+    <!-- Experience statement -->
+    {% if candidate.experience == True %}
+        <p><strong>Experience:</strong><span class="text-primary"> Yes</span></p>
+    {% else %}
+        <p><strong>Experience:</strong><span class="text-danger"> No</span></p>
+    {% endif %}
+    
+    <p><strong>Salary expectation:</strong> {{candidate.salary}}</p>
+    <p><strong>Presentation:</strong> {{candidate.message}}</p>
+    <hr>
+
+    <!-- SKILLS -->
+    <h6 class="text-primary mb-4 mt-4">SKILLS</h6>
+    <p><strong>Frameworks:</strong> {{candidate.frameworks}}</p>
+    <p><strong>Languages:</strong> {{candidate.languages}}</p>
+    <p><strong>Databases:</strong> {{candidate.databases}}</p>
+    <p><strong>Libraries:</strong> {{candidate.libraries}}</p>
+    <p><strong>Mobile:</strong> {{candidate.mobile}}</p>
+    <p><strong>Others:</strong> {{candidate.others}}</p>
+    <hr>
+
+    <!-- EDUCATIONAL -->
+    <h6 class="text-primary mb-4 mt-4">EDUCATIONAL</h6>
+    <p><strong>Institution:</strong> {{candidate.frameworks}}</p>
+    <p><strong>Course:</strong> {{candidate.course}}</p>
+    <p><strong>Started:</strong> {{candidate.started_course}}</p>
+    <p>{% if candidate.finished_course == None %} {% else %}
+        <strong>Finished:</strong> {{candidate.finished_course}}
+    </p>
+    {% endif %}
+    <p><strong>Course status:</strong> 
+        {% if candidate.status_course == 'I took a break' %}
+            <span class="text-danger">{{candidate.status_course}}</span>
+        {% elif candidate.status_course == "I'm studying" %}
+            <span style="color: green;">{{candidate.status_course}}</span>
+        {% else %}
+            <span>{{candidate.status_course}}</span></p>
+        {% endif %}
+    </p>
+    <p><strong>About:</strong> {{candidate.about_course}}</p>
+    <hr>
+    {% if candidate.company == "" %}
+    <p class="text-danger">This candidate has no experience</p>
+    {% else %}
+
+    <!-- EXPERIENCE -->
+    <h6 class="text-primary mb-4 mt-4">EXPERIENCE</h6>
+    <p><strong>Company:</strong> {{candidate.company}}</p>
+    <p><strong>Position:</strong> {{candidate.position}}</p>
+    <p><strong>Started:</strong> {{candidate.started_job}}</p>
+    <p><strong>Finished:</strong> {{candidate.finished_job}}</p>
+    <p><strong>About:</strong> {{candidate.about_course}}</p>
+    {% endif %}
+    <hr>
+
+    <!-- ==============NOTE====================== -->
+    <h6 class="text-primary mb-4 mt-4">NOTE</h6>
+    <!-- Employed -->
+    {% if candidate.employed == True %}
+    <p><strong>Employed:</strong> <span class="text-primary">Yes</span></p>    
+    {% else %}
+    <p><strong>Employed:</strong> <span class="text-danger">No</span></p>  
+    {% endif %}
+
+    <!-- Remotely -->
+    {% if candidate.remote == True %}
+    <p><strong>Accept to work remotely:</strong> Yes</p>    
+    {% else %}
+    <p><strong>Accept to work remotely:</strong> <span class="text-danger">No</span></p>  
+    {% endif %}
+
+    <!-- Travel -->
+    {% if candidate.travel == True %}
+    <p><strong>Available for trips:</strong> Yes</p>    
+    {% else %}
+    <p><strong>Available for trips:</strong> <span class="text-danger">No</span></p>  
+    {% endif %}
+    <hr>
+    {% block btn-bottom %}
+    <div class="text-right">
+        <a href="{% url 'backend' %}" class="btn btn-secondary btn-sm mt-2 mb-3 ms-1 my-btn">Back</a>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'admin:Management_candidate_change' candidate.id %}" target="_blank" class="btn btn-dark btn-sm mt-2 mb-3 my-btn">Note</a>
+        {% else %}{% endif %}
+
+        <!-- Export to pdf -->
+        <a href="{% url 'index' candidate.id %}" class="btn btn-warning btn-sm mt-2 mb-3 me-1" style="float:right">Export to PDF</a>
+    </div>
+    
+    <!-- Go up -->
+    <a href="#" title="Back to top" class="btn btn-light btn-sm border my-btn2"><i class="fas fa-arrow-up"></i></a>
+    {% endblock btn-bottom %}
+</div>
+<br><br><br>
+{% endblock content %}

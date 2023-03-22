@@ -1,0 +1,19 @@
+{% extends "modals/baseModal.html" %}
+
+<!-- Modal ID -->
+{% block modal-id %} id="searchModal" {% endblock modal-id %}
+
+<!-- Modal Title -->
+{% block modal-title %}
+<i class="fas fa-search"></i>&nbsp;&nbsp; Search...
+{% endblock modal-title %}
+
+<!-- Modal Body -->
+{% block modal-body %}
+<form class="d-flex">
+    <input class="form-control me-1" name="q" type="search" placeholder="Search in all columns" value="{{ request.GET.q }}">
+    <button class="btn " style="background-color: #d3d3d3;" title="Search" type="submit">
+        <i class="fas fa-search"></i>
+    </button>
+</form>
+{% endblock modal-body %}

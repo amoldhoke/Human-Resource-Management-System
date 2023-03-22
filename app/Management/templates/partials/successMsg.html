@@ -1,0 +1,11 @@
+    <!-- Message from backend (success - views.py)-->
+    <div class='text-center'>
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class='alert alert-primary alert-dismissible fade show' role='alert'>
+                    <strong>{{ message }}</strong>
+                    <a href=" {% url 'home' %} " type='button' class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>

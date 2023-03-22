@@ -1,0 +1,25 @@
+{% extends "modals/baseModal.html" %}
+
+<!-- Modal ID -->
+{% block modal-id %} id="deleteModal{{ data.pk }}" {% endblock modal-id %}
+
+<!-- Modal Title -->
+{% block modal-title %}
+<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Delete Candidate
+{% endblock modal-title %}
+
+<!-- Modal Body -->
+{% block modal-body %}
+<div class="text-center text-danger"><i class="far fa-times-circle fa-5x mb-4 mt-2"></i></div>
+<div class="text-center text-danger">
+    <span>DO YOU WANT TO DELETE CANDIDATE ?</span>
+    <div class="text-dark mt-3 mb-2">Candidate:
+        <strong>{{ data.firstname }} {{ data.lastname }}</strong>
+    </div>
+</div>
+{% endblock modal-body %}
+
+<!-- Modal Footer -->
+{% block modal-footer %}
+<a href="{% url 'delete' data.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+{% endblock modal-footer %}

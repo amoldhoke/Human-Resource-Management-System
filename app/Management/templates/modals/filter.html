@@ -1,0 +1,44 @@
+{% extends "modals/baseModal.html" %}
+
+<!-- Modal ID -->
+{% block modal-id %} id="filterModal" {% endblock modal-id %}
+
+<!-- Modal Title -->
+{% block modal-title %}
+<i class="fas fa-filter"></i>&nbsp;&nbsp; Advanced Filter
+{% endblock modal-title %}
+
+<!-- Modal Body -->
+{% block modal-body %}
+<!-- Filter -->
+<form>
+    <div class="row">
+        <div class="btn-group wd-100" role="group" >
+            <!-- Occupation -->
+            <div class="col-8">
+                <h6 class="ms-2">* Occupation</h6>
+                <input type="submit" class="btn-check" value="Frontend" name="f" id="btnradio1" autocomplete="off">
+                <label {% if request.GET.f == 'Frontend' %} class="btn btn-secondary btn-sm" {% else %} class="btn btn-outline-secondary btn-sm ms-4" {% endif %} for="btnradio1">&nbsp;&nbsp;Frontend&nbsp;&nbsp;</label>
+
+                <input type="submit" class="btn-check" value="Backend" name="f" id="btnradio2" autocomplete="off">
+                <label {% if request.GET.f == 'Backend' %} class="btn btn-secondary btn-sm" {% else %} class="btn btn-outline-secondary btn-sm" {% endif %} for="btnradio2">&nbsp;&nbsp;Backend&nbsp;&nbsp;</label>
+
+                <input type="submit" class="btn-check" value="Full-Stack" name="f" id="btnradio3" autocomplete="off">
+                <label {% if request.GET.f == 'Full-Stack' %} class="btn btn-secondary btn-sm" {% else %} class="btn btn-outline-secondary btn-sm my-margin" {% endif %} for="btnradio3">&nbsp;&nbsp;Full-Stack&nbsp;&nbsp;</label>
+               
+            </div>
+
+            <!-- Gender -->
+            <div class="col-4">
+                <h6>* Gender</h6>
+                <input type="submit" class="btn-check" value="M" name="f" id="btnradio4" autocomplete="off">
+                <label {% if request.GET.f == 'M' %} class="btn btn-primary btn-sm my-btn2" {% else %} class="btn btn-outline-primary btn-sm ms-4 my-btn2" {% endif %} for="btnradio4">&nbsp;&nbsp;M&nbsp;&nbsp;</label>
+
+                <input type="submit" class="btn-check" value="F" name="f" id="btnradio5" autocomplete="off">
+                <label {% if request.GET.f == 'F' %} class="btn btn-danger btn-sm my-btn2" {% else %} class="btn btn-outline-danger btn-sm my-btn2" {% endif %} for="btnradio5">&nbsp;&nbsp;F&nbsp;&nbsp;</label>
+                &nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock modal-body %}

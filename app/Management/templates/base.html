@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock title %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- FontAwsome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <!-- Icon tabs -->
+    <link rel="icon" href="{% static 'img/logo.ico' %}">
+    <!-- Static CSS -->
+    <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+</head>
+
+<body>
+  <!-- Navbar -->
+    <div class="wrapper">
+      <!-- Body image -->
+      {% block image %}
+        <style>
+            body {
+                background-image: url("{% static 'img/wave.jpg' %}");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+        </style>
+        {% endblock image %}
+      <header>
+        <nav  class="navbar navbar-expand-lg navbar-dark {% block navbar %} bg-dark {% endblock %}">
+          <div class="container-fluid">
+            {% block nav-content %}
+            <a class="navbar-brand flex-grow-1 text-center text-light to_center txt-sm2">
+              <img src="{% static 'img/949287f23fbe7745bd2541ee1ba43d53.png' %}" style="width:27px;">&nbsp;&nbsp;<strong class="txt-sm2">PINNACA A.I. Solutions</strong>
+            </a>
+            {% endblock nav-content %}
+        </div>
+        </nav>
+      </header>
+
+      <!-- ===== Block content (ROOT) ===== -->
+      {% block content %} {% endblock content %}
+
+      <!-- INCLUDES (No PK) -->
+      {% include 'modals/filter.html' %}
+      {% include 'modals/search.html' %}
+      {% include 'modals/logout.html' %}
+
+    </div>
+
+    <!-- Footer -->
+    {% block tag-footer %}
+    <footer class="bg-dark text-center text-lg-start" id="footer">
+      <div class="text-center">
+          &copy; {% now "Y" %} Copyright:
+          <a class="text-light" href="#" style="text-decoration: none;">
+              <span {% block footer %}style="color: #89cff0;"{% endblock footer %}>www.your-website.com</span>
+          </a>
+      </div>
+    </footer>
+    {% endblock tag-footer %}
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <!-- Jquery mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+
+    <!-- Static JS -->
+    <script src="{% static 'js/script.js' %}"></script>
+    
+</body>
+</html>

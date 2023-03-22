@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Page Content -->
+{% block content %}
+
+<div class="container card p-3 border-dark text-center mt-5" id="home-card" style="">
+
+    <!-- Success message -->
+    {% include 'partials/successMsg.html' %}
+
+    <h1>Job vacancy register</h1>
+    <h5 class="mt-3">
+       <img src="{% static 'img/design.png' %}" id="home-img"> Frontend &nbsp;|&nbsp; <img src="{% static 'img/development.png' %}" id="home-img"> Backend &nbsp;|&nbsp; <img src="{% static 'img/full-stack.png' %}" id="home-img"> Fullstack
+    </h5>
+    <hr>
+    <div class="d-grid gap-2 mt-4">
+        <a href="{% url 'register' %}" class="btn btn-primary txt-sm2">Applicant Registration</a>
+        <a href="{% url 'backend' %}" class="btn btn-warning txt-sm2">STAFF LOG IN</a>
+    </div>
+</div>
+
+{% endblock content %}

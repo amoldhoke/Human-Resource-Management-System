@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+<!-- Block title -->
+{% block title %} New candidate {% endblock title %}
+
+<!-- Navbar -->
+{% block navbar %} bg-primary {% endblock navbar %}
+
+{% block nav-content %}
+<a class="navbar-brand flex-grow-1 text-center text-light to_center">
+    <i class="fab fa-python f-size"></i>&nbsp;&nbsp;<span class="txt-sm3">NEW CANDIDATE</span>
+</a>
+{% endblock nav-content %}
+
+<!-- Body image block -->
+{% block image %}{% endblock image %}
+
+{% block content %}
+
+<div class="container mt-3" id="register-card">
+    <form method="POST" enctype="multipart/form-data" class='card p-3 mt-3' autocomplete='off' novalidate><!-- 'enctype' is used for proper submition of Files -->
+        {% csrf_token %}
+        <!-- Card 1 (Personal) -->
+        <div class="card border-dark p-3">
+            <span class='btn btn-secondary mb-4' style='cursor: default;'>
+                Personal
+            </span>
+            <div class="row">
+                <div class="col-md-4">{{ form.firstname|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.lastname|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.job|as_crispy_field }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ form.email|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.birth|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.phone|as_crispy_field }}</div>
+            </div>
+            <hr style='border: 1px solid #007bff;'>
+            <div class="row">
+                <div class="col-md-4">{{ form.personality|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.salary|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.gender|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.smoker|as_crispy_field }}</div>
+            </div>
+            {{ form.experience|as_crispy_field }}
+            <hr style='border: 1px solid #007bff; margin-top: -15px;'>
+            {{ form.message|as_crispy_field }}
+            <hr style='border: 1px solid #007bff;'>
+            {{ form.files|as_crispy_field }}
+            {{ form.image|as_crispy_field }}
+        </div>
+        <br>
+        <!-- Card 2 (Skills) -->
+        <div class="card border-dark p-3">
+            <span class='btn btn-secondary mb-4' style='cursor: default;'>YOUR SKILLS</span>
+                <div class="row">
+                    <div class="col-md-2">{{ form.frameworks|as_crispy_field }}</div>
+                    <div class="col-md-2">{{ form.languages|as_crispy_field }}</div>
+                    <div class="col-md-2">{{ form.databases|as_crispy_field }}</div>
+                    <div class="col-md-2">{{ form.libraries|as_crispy_field }}</div>
+                    <div class="col-md-2">{{ form.mobile|as_crispy_field }}</div>
+                    <div class="col-md-2">{{ form.others|as_crispy_field }}</div>
+                </div> 
+        </div>
+        <br>
+        <!-- Card 3 (Educational) -->
+        <div class='card border-dark p-3'>
+            <span class="btn btn-secondary mb-4" style="cursor: default;">EDUCATIONAL</span>
+            <div class='row mt-1'>
+                <div class="col-md-4">{{ form.institution|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.course|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.started_course|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.finished_course|as_crispy_field }}</div>
+            </div>
+            {{ form.about_course|as_crispy_field }}
+            <div class="row">
+                <div class="col-md-3">{{ form.status_course|as_crispy_field }}</div>
+            </div>
+        </div>
+        <br>
+        <!-- Card 4 (Professional) -->
+        <div class='card border-dark p-3'>
+            <span class="btn btn-secondary mb-4" style="cursor: default;">PROFESSIONAL</span>
+            <div class='row mt-1'>
+                <div class="col-md-4">{{ form.company|as_crispy_field }}</div>
+                <div class="col-md-4">{{ form.position|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.started_job|as_crispy_field }}</div>
+                <div class="col-md-2">{{ form.finished_job|as_crispy_field }}</div>
+            </div>
+            {{ form.about_job|as_crispy_field }}
+            <hr style='border: 1px solid #007bff;'>
+            <div class='row'>
+                <div class='col-md-3'>{{ form.employed|as_crispy_field }}</div>
+                <div class='col-md-3'>{{ form.remote|as_crispy_field }}</div>
+                <div class='col-md-3'>{{ form.travel|as_crispy_field }}</div>
+            </div>
+        </div>
+        <!-- Button -->
+        {% block button %}
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-sm mt-3 ms-1 my-btn">Submit</button>
+            <a href="{% url 'register' %}" class="btn btn-dark btn-sm mt-3 ms-1 my-btn">Reset</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary btn-sm mt-3 my-btn">Cancel</a>
+            <!-- Go up -->
+            <a href="#" class="btn btn-light btn-sm border mt-3 my-btn2"><i class="fas fa-arrow-up"></i></a>
+        </div>         
+        {% endblock button %}
+    </form>
+</div><!-- End // container -->
+
+<br><br><br>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "modals/baseModal.html" %}
+
+<!-- Modal ID -->
+{% block modal-id %} id="emailModal{{ data.pk }}" {% endblock modal-id %}
+
+<!-- Modal Title -->
+{% block modal-title %}
+<i class="fas fa-envelope"></i>&nbsp;&nbsp;Email to candidate
+{% endblock modal-title %}
+
+<!-- Modal Body -->
+{% block modal-body %}
+<form class="was-validated" action="{% url 'email' %}" method="POST">
+    {% csrf_token %}
+    <div class="modal-body">
+        <strong>To: <span class="text-primary">{{ data.firstname }} {{ data.lastname }}</span></strong>
+        <hr>
+        <!-- Input hidden -->
+        <input type="hidden" name="employee" value="{{ user.get_username }}">
+        <input type="hidden" name="name" value="{{ data.firstname }} {{ data.lastname }}">
+        <input type="hidden" name="email" value="{{ data.email }}">
+        <input type="hidden" name="status" value="{{ data.Situation }}">
+        <!-- Input not hidden -->
+        <input type="text" name="subject" class="form-control mb-2" placeholder="Subject" required>
+        <textarea class="form-control" rows="8" name="message" placeholder="Message to candidate..." required></textarea>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="fas fa-paper-plane"></i>&nbsp;&nbsp; Submit
+        </button>
+    </div>
+</form>
+{% endblock modal-body %}
+
+<!-- Block footer denied -->
+{% block btn-denied %}{% endblock btn-denied %}
