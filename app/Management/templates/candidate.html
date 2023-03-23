@@ -31,14 +31,14 @@
 
 <!-- Page content -->
 {% block content %}
-<div class="container {% block mt %} mt-5 {% endblock mt %}" {% block font %}{% endblock font %}> 
+<div class="container {% block mt %} mt-5 {% endblock mt %}" {% block font %}{% endblock font %}>
     <!-- Candidate name, image and download cv -->
     <div class="d-flex justify-content-between">
         {% block dt-user %}{% endblock dt-user %}
         <h6 class="mb-3">CANDIDATE: {{ candidate.id }}</h6>
         {% block btn-download %}
-            <a class="btn {% if candidate.gender == 'F' %} btn-danger {% else %} btn-primary {% endif %} btn-sm border-light" 
-                href="{{candidate.files.url}}" 
+            <a class="btn {% if candidate.gender == 'F' %} btn-danger {% else %} btn-primary {% endif %} btn-sm border-light"
+                href="{{candidate.files.url}}"
                 style="width: 150px;">Download CV
             </a>
         {% endblock btn-download %}
@@ -78,7 +78,7 @@
     {% else %}
         <p><strong>Experience:</strong><span class="text-danger"> No</span></p>
     {% endif %}
-    
+
     <p><strong>Salary expectation:</strong> {{candidate.salary}}</p>
     <p><strong>Presentation:</strong> {{candidate.message}}</p>
     <hr>
@@ -102,7 +102,7 @@
         <strong>Finished:</strong> {{candidate.finished_course}}
     </p>
     {% endif %}
-    <p><strong>Course status:</strong> 
+    <p><strong>Course status:</strong>
         {% if candidate.status_course == 'I took a break' %}
             <span class="text-danger">{{candidate.status_course}}</span>
         {% elif candidate.status_course == "I'm studying" %}
@@ -131,23 +131,23 @@
     <h6 class="text-primary mb-4 mt-4">NOTE</h6>
     <!-- Employed -->
     {% if candidate.employed == True %}
-    <p><strong>Employed:</strong> <span class="text-primary">Yes</span></p>    
+    <p><strong>Employed:</strong> <span class="text-primary">Yes</span></p>
     {% else %}
-    <p><strong>Employed:</strong> <span class="text-danger">No</span></p>  
+    <p><strong>Employed:</strong> <span class="text-danger">No</span></p>
     {% endif %}
 
     <!-- Remotely -->
     {% if candidate.remote == True %}
-    <p><strong>Accept to work remotely:</strong> Yes</p>    
+    <p><strong>Accept to work remotely:</strong> Yes</p>
     {% else %}
-    <p><strong>Accept to work remotely:</strong> <span class="text-danger">No</span></p>  
+    <p><strong>Accept to work remotely:</strong> <span class="text-danger">No</span></p>
     {% endif %}
 
     <!-- Travel -->
     {% if candidate.travel == True %}
-    <p><strong>Available for trips:</strong> Yes</p>    
+    <p><strong>Available for trips:</strong> Yes</p>
     {% else %}
-    <p><strong>Available for trips:</strong> <span class="text-danger">No</span></p>  
+    <p><strong>Available for trips:</strong> <span class="text-danger">No</span></p>
     {% endif %}
     <hr>
     {% block btn-bottom %}
@@ -160,10 +160,10 @@
         <!-- Export to pdf -->
         <a href="{% url 'index' candidate.id %}" class="btn btn-warning btn-sm mt-2 mb-3 me-1" style="float:right">Export to PDF</a>
     </div>
-    
+
     <!-- Go up -->
     <a href="#" title="Back to top" class="btn btn-light btn-sm border my-btn2"><i class="fas fa-arrow-up"></i></a>
     {% endblock btn-bottom %}
 </div>
-<br><br><br>
+<br><br><br><br><br>
 {% endblock content %}
