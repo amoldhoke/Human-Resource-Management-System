@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import CandidateCreate, CandidateViewSet, getRoutes, EmailStatus, MyTokenObtainPairView
+from .views import CandidateCreate, CandidateViewSet, getRoutes, EmailStatus, MyTokenObtainPairView, PdfView, dashboardcount
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 
@@ -9,10 +9,14 @@ router.register(r'candidate', CandidateViewSet)
 
 urlpatterns = [
     path('', getRoutes),
+    # Candidate total Count for dashboard
+    path('dashboardcount/', dashboardcount),
     # Candidate Registration
     path('register/', CandidateCreate.as_view()),
     # For Email and Situation(only Approved)
     path('email/<int:pk>/', EmailStatus.as_view()),
+        # For PDF
+    path('pdf/<int:pk>/', PdfView.as_view()),
     # For MainPage(candidate, candidate.pk)
     path('', include(router.urls)),
     # Simple JWT

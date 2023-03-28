@@ -18,7 +18,7 @@ from rest_framework import permissions
 from .customauth import IsRegularUser
 
 # Helpers
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 
 # For Mail
@@ -28,12 +28,22 @@ from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+#  For PDF
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.conf import settings
+from io import BytesIO
+import os
+from xhtml2pdf import pisa
+from django.shortcuts import get_object_or_404
+
 
 # ROUTE GUIDE
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
       'For API Documentation: api/docs/',
+      'For API schema: api/schema/',
       'For token Authentication',
       'To get Token: gettoken/',
       'To get Refreshtoken: refreshtoken/',
@@ -57,6 +67,23 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([JWTAuthentication])
+def dashboardcount(request):
+    total = Candidate.objects.all().count()
+    frontend = Candidate.objects.filter(job='Frontend').count()
+    backend = Candidate.objects.filter(job='Backend').count()
+    fullstack = Candidate.objects.filter(job='Full-Stack').count()
+    data = {
+        'total': total,
+        'frontend': frontend,
+        'backend': backend,
+        'fullstack': fullstack
+    }
+    return Response(data)
 
 
 # CANDIDATE REGISTRATON
@@ -130,5 +157,41 @@ class EmailStatus(RetrieveUpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class PdfView(APIView):
+    authentication_classes=[JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, pk):
+        candidate = get_object_or_404(Candidate, id=pk)
+        pdf_name = f'{candidate.firstname} {candidate.lastname}.pdf'
+        user = request.user
+        context = {'candidate': candidate, 'user': user}
+        template = get_template('pdf.html')
+        html = template.render(context)
 
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result, encoding='UTF-8', link_callback=self.fetch_resources)
 
+        if not pdf.err:
+            response = HttpResponse(result.getvalue(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{pdf_name}"'
+            return response
+
+        return Response({'detail': 'Error generating PDF file'}, status=500)
+
+    def fetch_resources(self, uri, rel):
+        sUrl = settings.STATIC_URL
+        sRoot = settings.STATIC_ROOT
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
+        else:
+            return uri
+
+        if not os.path.isfile(path):
+            raise Exception('media URI must start with %s or %s' % (sUrl, mUrl))
+
+        return path
